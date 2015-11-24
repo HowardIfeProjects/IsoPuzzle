@@ -37,7 +37,6 @@ public class LevelRotation : MonoBehaviour {
 
         m_StartingRotation = transform.rotation;
         Initialise();
-
 	}
 	
 	// Update is called once per frame
@@ -145,8 +144,8 @@ public class LevelRotation : MonoBehaviour {
 
     void OnDrawGizmos()
     {
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawWireCube(DebugCameraPos, new Vector3(1f, 1f, 1f));
-        //Gizmos.DrawWireCube(DebugPlayerPos, new Vector3(1f, 1f, 1f));
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(DebugCameraPos, new Vector3(1f, 1f, 1f));
+        Gizmos.DrawWireCube(DebugPlayerPos, new Vector3(1f, 1f, 1f));
     }
 }
