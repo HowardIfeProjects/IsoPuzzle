@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Test : MonoBehaviour {
+public class ItemProperties : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -10,7 +10,11 @@ public class Test : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log("This script should work.");
-	
+        //TestPass();
 	}
+
+    void TestPass()
+    {
+        Debug.Log("This is passing through!");
+    }
 }

@@ -15,6 +15,7 @@ public static class PrefabFactory {
     //Static Methods===============================================================================
     public static void InitPrefabs()
     {
+        //store levels in rocorces 
         //assign prefabs with Resources.Load("") as GameObject
     }
 
