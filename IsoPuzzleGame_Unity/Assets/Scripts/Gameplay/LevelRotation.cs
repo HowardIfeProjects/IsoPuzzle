@@ -12,6 +12,8 @@ public class LevelRotation : MonoBehaviour {
     [SerializeField] float m_RotationSpeed;
     [SerializeField] float m_MovementSpeed;
     [SerializeField] float m_FollowDelayTime;
+    [SerializeField] float m_verticalDiff = 20f;
+    [SerializeField] float m_elevationAngle = 10f;
 
     public enum TrackingEnum
     {
@@ -29,20 +31,35 @@ public class LevelRotation : MonoBehaviour {
     private bool m_StartFollowingPlayer = true;
     private bool m_DelayStarted = false;
     private GameObject m_Player;
+    private Vector3 m_currentVector;
+
+    //V2
+    float m_angle;
+
+    float m_horizontalDiff;
+    float s;
+    float c;
+    float m_lengthRatios;
+    Vector2 dir;
 
     //Unity Lifecycle=================================================================================
 
     // Use this for initialization
-    void Start () {
+    private void Start () {
 
         m_StartingRotation = transform.rotation;
         Initialise();
+
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void Update() {
 
         PlayerInput();
+    }
+	
+	// Update is called once per frame
+	private void LateUpdate () {
+
         TrackPlayer();
 
     }
@@ -55,6 +72,11 @@ public class LevelRotation : MonoBehaviour {
 
     //-----------------------------------------------------------------------------------------
 
+    private void HorizontalCalculation()
+    {
+        m_horizontalDiff = m_verticalDiff / Mathf.Tan(m_elevationAngle * Mathf.Deg2Rad);
+    }
+
     private void TrackPlayer()
     {
         if (!m_RotationComplete)
@@ -62,22 +84,20 @@ public class LevelRotation : MonoBehaviour {
 
         Vector3 _playerPos = m_Player.transform.position;
         Vector3 _camPos = m_Camera.transform.position;
-        DebugPlayerPos = _playerPos;
-        DebugCameraPos = _camPos;
 
         Vector3 _rot = m_Camera.transform.eulerAngles;
 
         if (TrackingMode == LevelRotation.TrackingEnum.VerticalandHorizontal)
             _camPos.y = _playerPos.y;
 
-        if (Mathf.Round(_rot.y) == 0)
-            _camPos.x = _playerPos.x;
-        else if (Mathf.Round(_rot.y) == 90)
-            _camPos.z = _playerPos.z;
-        else if (Mathf.Round(_rot.y) == 180)
-            _camPos.x = _playerPos.x;
-        else if (Mathf.Round(_rot.y) == 270)
-            _camPos.z = _playerPos.z;
+        HorizontalCalculation();
+
+        s = Mathf.Sin(m_angle * Mathf.Deg2Rad);
+        c = Mathf.Cos(m_angle * Mathf.Deg2Rad);
+
+        dir = new Vector2(s, c).normalized * m_horizontalDiff;
+
+        _camPos = ReturnCamPosition(_rot.y, _camPos);
 
         if (m_StartFollowingPlayer)
             m_Camera.transform.position = Vector3.Lerp(m_Camera.transform.position, _camPos, m_MovementSpeed * Time.deltaTime);
@@ -93,7 +113,6 @@ public class LevelRotation : MonoBehaviour {
             if (!m_StartFollowingPlayer && !m_DelayStarted)
                 StartCoroutine(DelayBeforeFollow(m_FollowDelayTime));
         }
-        
     }
 
     private void PlayerInput()
@@ -104,12 +123,12 @@ public class LevelRotation : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.E))
         {
             StopAllCoroutines();
-            StartCoroutine(Rotate(90));
+            StartCoroutine(Rotate(-90));
         }
         else if (Input.GetKeyDown(KeyCode.Q))
         {
             StopAllCoroutines();
-            StartCoroutine(Rotate(-90));
+            StartCoroutine(Rotate(90));
         }     
     }
 
@@ -142,10 +161,36 @@ public class LevelRotation : MonoBehaviour {
         m_Camera.transform.parent = null;
     }
 
-    void OnDrawGizmos()
+    private Vector3 ReturnCamPosition(float y, Vector3 _pos)
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(DebugCameraPos, new Vector3(1f, 1f, 1f));
-        Gizmos.DrawWireCube(DebugPlayerPos, new Vector3(1f, 1f, 1f));
+        if (Mathf.Round(y) == 0)
+        {
+            _pos.x = m_Player.transform.position.x + dir.x;
+            _pos.z = m_Player.transform.position.z - dir.y;
+            _pos.y = m_Player.transform.position.y + m_verticalDiff;
+        }
+        else if (Mathf.Round(y) == 180)
+        {
+            _pos.x = m_Player.transform.position.x - dir.x;
+            _pos.z = m_Player.transform.position.z + dir.y;
+            _pos.y = m_Player.transform.position.y + m_verticalDiff;
+        }
+        else if (Mathf.Round(y) == 90)
+        {
+            _pos.x = m_Player.transform.position.x - dir.y;
+            _pos.z = m_Player.transform.position.z + dir.x;
+            _pos.y = m_Player.transform.position.y + m_verticalDiff;
+        }
+        else if (Mathf.Round(y) == 270)
+        {
+            _pos.x = m_Player.transform.position.x + dir.y;
+            _pos.z = m_Player.transform.position.z - dir.x;
+            _pos.y = m_Player.transform.position.y + m_verticalDiff;
+        }
+
+        return _pos;
     }
+
+
+
 }
