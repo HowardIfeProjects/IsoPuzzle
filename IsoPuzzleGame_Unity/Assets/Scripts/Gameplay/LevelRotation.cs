@@ -12,8 +12,6 @@ public class LevelRotation : MonoBehaviour {
     [SerializeField] float m_RotationSpeed;
     [SerializeField] float m_MovementSpeed;
     [SerializeField] float m_FollowDelayTime;
-    [SerializeField] float m_verticalDiff = 20f;
-    [SerializeField] float m_elevationAngle = 10f;
 
     public enum TrackingEnum
     {
@@ -31,16 +29,6 @@ public class LevelRotation : MonoBehaviour {
     private bool m_StartFollowingPlayer = true;
     private bool m_DelayStarted = false;
     private GameObject m_Player;
-    private Vector3 m_currentVector;
-
-    //V2
-    float m_angle;
-
-    float m_horizontalDiff;
-    float s;
-    float c;
-    float m_lengthRatios;
-    Vector2 dir;
 
     //Unity Lifecycle=================================================================================
 
@@ -52,7 +40,7 @@ public class LevelRotation : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void LateUpdate () {
+	void Update () {
 
         PlayerInput();
         TrackPlayer();
@@ -67,29 +55,6 @@ public class LevelRotation : MonoBehaviour {
 
     //-----------------------------------------------------------------------------------------
 
-    private void TrackPlayerV2()
-    {
-        HorizontalCalculation();
-
-        s = Mathf.Sin(m_angle * Mathf.Deg2Rad);
-        c = Mathf.Cos(m_angle * Mathf.Deg2Rad);
-
-        dir = new Vector2(s, c).normalized * m_horizontalDiff;
-
-        Vector3 _camPos = m_Camera.transform.position;
-        _camPos.x = m_Player.transform.position.x - dir.x;
-        _camPos.z = m_Player.transform.position.z - dir.y;
-        _camPos.y = m_Player.transform.position.y + m_verticalDiff;
-        m_Camera.transform.position = _camPos;
-
-       // m_Camera.transform.LookAt(m_Player.transform);
-    }
-
-    private void HorizontalCalculation()
-    {
-        m_horizontalDiff = m_verticalDiff / Mathf.Tan(m_elevationAngle * Mathf.Deg2Rad);
-    }
-
     private void TrackPlayer()
     {
         if (!m_RotationComplete)
@@ -97,48 +62,25 @@ public class LevelRotation : MonoBehaviour {
 
         Vector3 _playerPos = m_Player.transform.position;
         Vector3 _camPos = m_Camera.transform.position;
+        DebugPlayerPos = _playerPos;
+        DebugCameraPos = _camPos;
 
         Vector3 _rot = m_Camera.transform.eulerAngles;
 
         if (TrackingMode == LevelRotation.TrackingEnum.VerticalandHorizontal)
             _camPos.y = _playerPos.y;
 
-        HorizontalCalculation();
-
-        s = Mathf.Sin(m_angle * Mathf.Deg2Rad);
-        c = Mathf.Cos(m_angle * Mathf.Deg2Rad);
-
-        dir = new Vector2(s, c).normalized * m_horizontalDiff;
-
         if (Mathf.Round(_rot.y) == 0)
-        {
-            _camPos.x = m_Player.transform.position.x + dir.x;
-            _camPos.z = m_Player.transform.position.z - dir.y;
-            _camPos.y = m_Player.transform.position.y + m_verticalDiff;
-        }
-        else if(Mathf.Round(_rot.y) == 180)
-        {
-            _camPos.x = m_Player.transform.position.x - dir.x;
-            _camPos.z = m_Player.transform.position.z + dir.y;
-            _camPos.y = m_Player.transform.position.y + m_verticalDiff;
-        }
+            _camPos.x = _playerPos.x;
         else if (Mathf.Round(_rot.y) == 90)
-        {
-            _camPos.x = m_Player.transform.position.x - dir.y;
-            _camPos.z = m_Player.transform.position.z + dir.x;
-            _camPos.y = m_Player.transform.position.y + m_verticalDiff;
-        }
+            _camPos.z = _playerPos.z;
+        else if (Mathf.Round(_rot.y) == 180)
+            _camPos.x = _playerPos.x;
         else if (Mathf.Round(_rot.y) == 270)
-        {
-            _camPos.x = m_Player.transform.position.x + dir.y;
-            _camPos.z = m_Player.transform.position.z - dir.x;
-            _camPos.y = m_Player.transform.position.y + m_verticalDiff;
-        }
+            _camPos.z = _playerPos.z;
 
         if (m_StartFollowingPlayer)
-        {
             m_Camera.transform.position = Vector3.Lerp(m_Camera.transform.position, _camPos, m_MovementSpeed * Time.deltaTime);
-        }
 
         if ((m_Camera.transform.position - _camPos).magnitude < 0.02f)
         {
@@ -151,6 +93,7 @@ public class LevelRotation : MonoBehaviour {
             if (!m_StartFollowingPlayer && !m_DelayStarted)
                 StartCoroutine(DelayBeforeFollow(m_FollowDelayTime));
         }
+        
     }
 
     private void PlayerInput()
@@ -161,12 +104,12 @@ public class LevelRotation : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.E))
         {
             StopAllCoroutines();
-            StartCoroutine(Rotate(-90));
+            StartCoroutine(Rotate(90));
         }
         else if (Input.GetKeyDown(KeyCode.Q))
         {
             StopAllCoroutines();
-            StartCoroutine(Rotate(90));
+            StartCoroutine(Rotate(-90));
         }     
     }
 
@@ -199,4 +142,10 @@ public class LevelRotation : MonoBehaviour {
         m_Camera.transform.parent = null;
     }
 
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(DebugCameraPos, new Vector3(1f, 1f, 1f));
+        Gizmos.DrawWireCube(DebugPlayerPos, new Vector3(1f, 1f, 1f));
+    }
 }
