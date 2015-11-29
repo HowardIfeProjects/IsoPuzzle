@@ -16,6 +16,7 @@ public static class PrefabFactory {
     public static void InitPrefabs()
     {
         //assign prefabs with Resources.Load("") as GameObject
+        Player_Prefab = Resources.Load("Player") as GameObject;
     }
 
     //-----------------------------------------------------------------------------------------------
