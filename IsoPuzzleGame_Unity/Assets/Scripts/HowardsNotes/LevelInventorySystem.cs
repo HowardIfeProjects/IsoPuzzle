@@ -6,6 +6,7 @@ public class LevelInventorySystem : MonoBehaviour {
 
     //TODO: Set up a gameObject script and assign it into this Class, then find a way to show a hud when near an object 
 
+    InventorySystemManager inventorySystem;
 
     [SerializeField]
     bool DEBUG;
@@ -30,9 +31,25 @@ public class LevelInventorySystem : MonoBehaviour {
     {
         float closestObject;
         closestObject = Mathf.Infinity;
+      
 
         for (int i = 0; i < m_Items.Length; i++)//if i is less than the number items in the array, run this function and add 1 to the value of i
         {
+            ItemProperties itemPorperties;
+            GameObject currentObject = m_Items[i];//not needed but this allows you to assign the current gameObject running the for loop to be assigned to something else 
+
+           // Debug.Log(currentObject);
+
+            
+
+            if (m_Items[i].GetComponent<ItemProperties>() != null)//(if the current gameObject has the script/component 'ItemProperties' attached to it 
+            {
+                itemPorperties = m_Items[i].GetComponent<ItemProperties>();//it will assign the script to this variable 
+                //itemPorperties.TestPass();//the variable will trigger this method from the other script (make sure it's public else it wont work)
+                Debug.Log(m_Items[i] + " Works!");
+                 /*Okay, now you've got this working prep up for figuring out what you want to do with this script, it should be in 'Howard Notes One'
+                 Illustrator file so look at that on Sunday!*/  
+            }
 
             if (m_Items[i] != null)//if the item number in the array does not equal nothing e.g. m_Items[2] has a gameObject in, this will run the function however if m_Item[2] has no gameObject in then the function will not run 
             {
