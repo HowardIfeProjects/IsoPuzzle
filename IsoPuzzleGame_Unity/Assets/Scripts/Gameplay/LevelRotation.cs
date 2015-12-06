@@ -105,7 +105,6 @@ public class LevelRotation : MonoBehaviour {
 
         if ((m_Camera.transform.position - _camPos).magnitude < 0.02f)
         {
-            Debug.Log("Ontop of Player");
             m_Camera.transform.position = _camPos;
             m_StartFollowingPlayer = false;
             m_DelayStarted = false;
