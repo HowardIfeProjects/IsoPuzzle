@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Test : MonoBehaviour {
+public class PlayerStates : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -10,7 +10,6 @@ public class Test : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log("This script should work.");
 	
 	}
 }
