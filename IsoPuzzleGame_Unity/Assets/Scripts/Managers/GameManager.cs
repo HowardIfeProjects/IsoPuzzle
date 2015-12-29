@@ -3,6 +3,15 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
+    //SAVE / LOAD Delegates
+    public delegate void E_Save();
+    public static event E_Save OnSave;
+
+    public delegate void E_Load();
+    public static event E_Load OnLoad;
+
+
+    //UNITY LIFECYCLE===================================================
 	// Use this for initialization
 	void Start () {
 	
@@ -12,4 +21,6 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    //==================================================================
 }

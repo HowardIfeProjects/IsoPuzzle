@@ -35,6 +35,7 @@ public class LevelManager : MonoBehaviour {
     //==========================================================================
 
     //Hud Stuff
+    [SerializeField] Text m_ObjectiveText;
 
     //UNITY LIFECYCLE-----------------------------------------------------------
 
@@ -45,10 +46,14 @@ public class LevelManager : MonoBehaviour {
 
         //init delegates
         LevelManager.OnReturnLevelData += ReturnLevelData;
+        LevelManager.OnLevelComplete += LevelComplete;
+        LevelManager.OnLoadNextObjective += LoadNextObjective;
 
     }
 	// Use this for initialization
 	private void Start () {
+
+        InitFirstObjective();
 
     }
 	
@@ -64,6 +69,30 @@ public class LevelManager : MonoBehaviour {
     private LevelData ReturnLevelData()
     {
         return li_LevelData[m_CurrentLevel];
+    }
+
+    private void LoadNextObjective()
+    {
+        //if the current index is greater then the length of the objective array
+        if (li_LevelData[m_CurrentLevel]._CurObjectiveIndex > li_LevelData[m_CurrentLevel]._Objectives.Length) {
+            //Next Level
+            LevelManager.OnLevelComplete();
+        }
+        else
+            li_LevelData[m_CurrentLevel]._CurObjectiveIndex++;
+
+        //update HUD
+        m_ObjectiveText.text = li_LevelData[m_CurrentLevel]._Objectives[li_LevelData[m_CurrentLevel]._CurObjectiveIndex];
+    }
+
+    private void InitFirstObjective()
+    {
+        //update HUD
+        m_ObjectiveText.text = li_LevelData[m_CurrentLevel]._Objectives[li_LevelData[m_CurrentLevel]._CurObjectiveIndex];
+    }
+
+    private void LevelComplete()
+    {
     }
 
     //--------------------------------------------------------------------------
