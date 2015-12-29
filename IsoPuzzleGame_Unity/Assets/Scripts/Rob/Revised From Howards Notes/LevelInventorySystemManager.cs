@@ -22,11 +22,16 @@ public class LevelInventorySystemManager : MonoBehaviour {
     {
 
         m_Player = GameObject.FindGameObjectWithTag("Player");
-        m_Items = GameObject.FindGameObjectsWithTag("Item");
+
+        if(GameObject.FindGameObjectWithTag("Item"))
+            m_Items = GameObject.FindGameObjectsWithTag("Item");
     }
 
     void Update()
     {
+        if (m_Items.Length <= 0)
+            return;
+
         float closestObject;
         closestObject = Mathf.Infinity;
 

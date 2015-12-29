@@ -123,15 +123,11 @@ public class PlatformMovement : MonoBehaviour {
     }
 
     //Send Message Methods
-    public void StartMovement()
+    public void EventTrigger()
     {
-        m_Move = true;
+        m_Move = !m_Move;
     }
 
-    public void StopMovement()
-    {
-        m_Move = false;
-    }
 
     public void NextTarget()
     {
