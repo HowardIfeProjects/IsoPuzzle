@@ -12,6 +12,7 @@ public class PlatformMovement : MonoBehaviour {
     public PlatformType m_PlatformType = new PlatformType();
     public float m_Speed;
     public bool m_Loop;
+    public bool m_FollowPathBackwards;
     public bool m_Move;
     public bool m_MoveInIntervals;
     public float m_DelayTime;
@@ -25,6 +26,7 @@ public class PlatformMovement : MonoBehaviour {
     }
 
     private bool m_CounterStarted = false;
+    private bool m_IncreaseIndex = true;
 
 
     //UNITY LIFECYCLE=======================================================
@@ -63,7 +65,15 @@ public class PlatformMovement : MonoBehaviour {
                         transform.position = _curWaypointPos;
 
                         if (!m_MoveInIntervals)
-                            m_currentIndex++;
+                        {
+                            if (m_currentIndex <= 0)
+                                m_IncreaseIndex = true;
+
+                            if (m_IncreaseIndex)
+                                m_currentIndex++;
+                            else
+                                m_currentIndex--;
+                        }
                     }
                     else
                     {
@@ -72,7 +82,17 @@ public class PlatformMovement : MonoBehaviour {
                 }
                 else
                 {
-                    if (m_Loop)
+                    if (m_FollowPathBackwards)
+                    {
+                        if (m_currentIndex == 0)
+                            m_IncreaseIndex = true;
+                        else if (m_currentIndex >= m_Points.Count)
+                        {
+                            m_currentIndex = (m_Points.Count - 2);
+                            m_IncreaseIndex = false;
+                        }
+                    }
+                    else if (m_Loop)
                         m_currentIndex = 0;
                     else
                     {
@@ -123,7 +143,7 @@ public class PlatformMovement : MonoBehaviour {
     }
 
     //Send Message Methods
-    public void EventTrigger()
+    public void EventTriggered()
     {
         m_Move = !m_Move;
     }

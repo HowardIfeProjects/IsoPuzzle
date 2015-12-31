@@ -82,7 +82,8 @@ public class LevelManager : MonoBehaviour {
             li_LevelData[m_CurrentLevel]._CurObjectiveIndex++;
 
         //update HUD
-        m_ObjectiveText.text = li_LevelData[m_CurrentLevel]._Objectives[li_LevelData[m_CurrentLevel]._CurObjectiveIndex];
+        if(m_CurrentLevel < li_LevelData.Count-1)
+            m_ObjectiveText.text = li_LevelData[m_CurrentLevel]._Objectives[li_LevelData[m_CurrentLevel]._CurObjectiveIndex];
     }
 
     private void InitFirstObjective()
