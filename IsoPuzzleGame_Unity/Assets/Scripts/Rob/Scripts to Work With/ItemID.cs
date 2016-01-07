@@ -5,7 +5,7 @@ public static class ItemID{
 
     public enum ItemIdentity
     {
-        BrownCube,
+        BrownCube,//a name to assign to a variable 
         BlueCube,
         YellowCube
     }

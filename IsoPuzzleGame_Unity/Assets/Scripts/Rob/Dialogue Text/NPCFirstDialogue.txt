@@ -1,0 +1,6 @@
+NPC | Hey Player! This is my first line! |0
+NPC | This is my second line!
+NPC | And this is my third!
+NPC | And erm... you get the idea.|1
+NPC | No, wait! You don't, you need to see this line twice!
+NPC | No, wait! You don't, you need to see this line twice!|2

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ItemProperties : MonoBehaviour {
 
@@ -8,19 +9,29 @@ public class ItemProperties : MonoBehaviour {
     int m_itemID;
 
     [SerializeField]
-    private string m_itemDescription;
+    public string m_itemDescription;
 
     [SerializeField]
     private Sprite m_itemImage;
 
+    public GameObject _hud;
+
+    public string m_itemTitle;
+
     public GameObject m_itemUI;
+
+    public Text m_itemTitleText;
 
     public ItemID.ItemIdentity m_ItemType = new ItemID.ItemIdentity();
 
+    private HUDScript hudScript;
+
     private void Awake()
     {
+        hudScript = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDScript>();
         SetID();
         m_itemUI.SetActive(false);
+        SetUpUI();
     }
 
     private void SetID()
@@ -39,10 +50,16 @@ public class ItemProperties : MonoBehaviour {
                 m_itemID = ItemID.YellowCubeID;
                 break;
         }
-    } 
+    }
+
+    public void SetUpUI()
+    {
+        m_itemTitleText.text = m_itemTitle;
+    }
 
     public void PickUpItem()
     {
+        hudScript.AddItemImage(m_itemImage, m_itemID);
         InventorySystemManager.CallAddItem(m_itemID, m_itemDescription, m_itemImage);
         Destroy(gameObject);
     }

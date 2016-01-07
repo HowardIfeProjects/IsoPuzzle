@@ -1,0 +1,26 @@
+Player One|This is line one. Player is speaking, you need to figure out how to show my name!| 0|PLRSPR
+NPC|This is line two. This is the NPC speaking, Rob really need to figure out how to display our names.
+Player One|Indeed NPC, we cannot continue making sure we say who we are in every line.
+NPC|That's true Player, if we keep this up we will confuse ourselves!
+???|Sorry but who are you again?
+???|I'm the Player... 
+Player|No wait the NPC?|1|PLRSPR
+???|Gah! Sort this problem out soon Rob!|2|PLRSPR
+Choice A|Choice B|Choice C|BTN|21|25|0|8|21|25
+???|By the way Rob, make sure either Howard see this line or tell him to add the few lines of code in to disable Player movement. 
+
+
+
+
+
+
+
+
+
+
+
+Rob|This should work!
+Player|Wait! Who said that?!
+Rob|You know, the guy who's trying to figure all this out.
+Player|Oh that guy... His coding is pretty shitty...|0|PLRSPR
+Rob|Hey, take that back! I know it's the truth but I have feelings!
