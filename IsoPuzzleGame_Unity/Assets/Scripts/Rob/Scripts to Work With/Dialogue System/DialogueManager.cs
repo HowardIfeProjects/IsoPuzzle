@@ -111,7 +111,6 @@ public class DialogueManager : MonoBehaviour
         string thisLine = _textLines[_currentLine];//prepares the line stored in the array to be split 
         string[] _splitCurrentLine = thisLine.Split('|');//for everytime the code finds a '|' in the line, it will create a new line in this array 
 
-        Debug.Log(_splitCurrentLine.Length);
 
         if(_textLines[_currentLine].Contains("BTN"))
         {

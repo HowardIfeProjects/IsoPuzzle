@@ -32,6 +32,9 @@ public class LevelManager : MonoBehaviour {
     public delegate LevelData E_ReturnLevelData();
     public static event E_ReturnLevelData OnReturnLevelData;
 
+    public delegate void E_Nullify();
+    public static event E_Nullify OnNullify;
+
     //==========================================================================
 
     //Hud Stuff
@@ -49,7 +52,15 @@ public class LevelManager : MonoBehaviour {
         LevelManager.OnLevelComplete += LevelComplete;
         LevelManager.OnLoadNextObjective += LoadNextObjective;
 
+        Initialise();
+
     }
+
+    private void Initialise()
+    {
+        m_ObjectiveText = GameObject.Find("Mission_Text").GetComponent<Text>();
+    }
+
 	// Use this for initialization
 	private void Start () {
 
@@ -95,6 +106,8 @@ public class LevelManager : MonoBehaviour {
     private void LevelComplete()
     {
     }
+
+    
 
     //--------------------------------------------------------------------------
 

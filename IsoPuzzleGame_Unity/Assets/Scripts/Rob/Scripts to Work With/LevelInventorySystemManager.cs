@@ -59,8 +59,8 @@ public class LevelInventorySystemManager : MonoBehaviour {
                         if (!m_itemsInView.Contains(m_Items[i].gameObject))
                             m_itemsInView.Add(m_Items[i].gameObject);
 
-                        if (DEBUG)
-                            Debug.Log("Item: " + m_Items[i].name + "   Distance : " + (m_Items[i].transform.position - m_Player.transform.position).magnitude);
+                        //if (DEBUG)
+                        //    Debug.Log("Item: " + m_Items[i].name + "   Distance : " + (m_Items[i].transform.position - m_Player.transform.position).magnitude);
                     }
                     else
                         m_itemsInView.Remove(m_Items[i].gameObject);
@@ -68,8 +68,8 @@ public class LevelInventorySystemManager : MonoBehaviour {
                     if (Vector3.Distance(m_Player.transform.position, m_Items[i].transform.position) < closestObject)
                     {
                         closestObject = Vector3.Distance(m_Player.transform.position, m_Items[i].transform.position);
-                        if(DEBUG)
-                            Debug.Log("The closest object is: " + m_Items[i]);
+                        //if(DEBUG)
+                        //    Debug.Log("The closest object is: " + m_Items[i]);
 
                         bool closeToItem = (Vector3.Distance(m_Player.transform.position, m_Items[i].transform.position) <= 3f);
 

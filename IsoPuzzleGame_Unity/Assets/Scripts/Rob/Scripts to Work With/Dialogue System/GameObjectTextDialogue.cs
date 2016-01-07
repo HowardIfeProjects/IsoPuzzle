@@ -173,11 +173,10 @@ public class GameObjectTextDialogue : MonoBehaviour
     void CheckPlayerDistance() //Didn't make sense to use since it is only used for one object 
     {
         Vector3 _dir = _player.transform.position - this.transform.position;
-        Debug.Log("this is working" + _dir);
+
         Debug.DrawRay(this.transform.position, _dir,  Color.red);
         if (Vector3.Distance(_player.transform.position, this.transform.position) <= 2.5f) //needs explaining 
         {
-            Debug.Log("you are close enough!");
 
                 PlayerInput();
             _npcUI.SetActive(true);
