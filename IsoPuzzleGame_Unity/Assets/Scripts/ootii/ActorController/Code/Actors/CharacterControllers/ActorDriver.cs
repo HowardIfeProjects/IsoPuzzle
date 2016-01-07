@@ -18,6 +18,8 @@ namespace com.ootii.Actors
     [AddComponentMenu("ootii/Actor Drivers/Actor Driver")]
     public class ActorDriver : MonoBehaviour
     {
+
+        public static bool IsTalking = false;
         /// <summary>
         /// Determines if the driver is enabled
         /// </summary>
@@ -141,6 +143,7 @@ namespace com.ootii.Actors
         {
             if (!_IsEnabled) { return; }
             if (mActorController == null) { return; }
+            if (IsTalking) return;
            // if (mInputSource == null || !mInputSource.IsEnabled) { return; }
 
             float lDeltaTime = TimeManager.SmoothedDeltaTime;

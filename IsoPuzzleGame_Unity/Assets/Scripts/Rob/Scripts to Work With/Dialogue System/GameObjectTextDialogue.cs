@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using com.ootii.Helpers;
+using com.ootii.Input;
+using com.ootii.Timing;
+using com.ootii.Utilities.Debug;
+
+
 public class GameObjectTextDialogue : MonoBehaviour
 {
 
@@ -47,7 +53,7 @@ public class GameObjectTextDialogue : MonoBehaviour
         if (inventoryManager.GetComponent<InventorySystemManager>())
         {
             _inventoryLibary = inventoryManager.GetComponent<InventorySystemManager>();//assigns the InventorySystemManager script assigned on the inventoryManager gameObject 
-
+            
         }
     }
 	

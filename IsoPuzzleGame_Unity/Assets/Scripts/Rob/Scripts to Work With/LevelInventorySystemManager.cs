@@ -64,7 +64,7 @@ public class LevelInventorySystemManager : MonoBehaviour {
                     }
                     else
                         m_itemsInView.Remove(m_Items[i].gameObject);
-
+                    
                     if (Vector3.Distance(m_Player.transform.position, m_Items[i].transform.position) < closestObject)
                     {
                         closestObject = Vector3.Distance(m_Player.transform.position, m_Items[i].transform.position);

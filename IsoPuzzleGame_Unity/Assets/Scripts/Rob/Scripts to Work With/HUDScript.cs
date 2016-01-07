@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using com.ootii.Actors;
 
 public class HUDScript : MonoBehaviour {
 
@@ -17,6 +18,8 @@ public class HUDScript : MonoBehaviour {
     private int _imageTwoID;
     private int _imageThreeID;
 
+    
+
     // Use this for initialization
     void Start () {
 	
@@ -25,6 +28,8 @@ public class HUDScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+   
+
 	}
 
     public void AddItemImage(Sprite spr, int i)// need to pass the sprite found in the inventory to the 
