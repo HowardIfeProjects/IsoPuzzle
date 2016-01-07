@@ -160,32 +160,50 @@ public class PlatformMovement : MonoBehaviour {
         if (!SHOW_PATHS || m_Points == null || m_Points.Count < 2)
             return;
 
-        for (int i = 1; i < m_Points.Count; i++)
+        if (!m_FollowPathBackwards)
         {
-
-            if (i == m_Points.Count - 1)
+            for (int i = 1; i < m_Points.Count; i++)
             {
-                if (m_Loop)
+
+                if (i == m_Points.Count - 1)
                 {
-                    Gizmos.color = Color.green;
-                    Gizmos.DrawLine(m_Points[i].position, m_Points[0].position);
-                    Gizmos.color = Color.red;
-                    Gizmos.DrawWireSphere(m_Points[i].position, 0.25f);
-                }
-                else
-                {
-                    Gizmos.color = Color.green;
-                    Gizmos.DrawLine(m_Points[i-1].position, m_Points[i].position);
-                    Gizmos.color = Color.red;
-                    Gizmos.DrawWireSphere(m_Points[i].position, 0.25f);
+                    if (m_Loop)
+                    {
+                        Gizmos.color = Color.green;
+                        Gizmos.DrawLine(m_Points[i].position, m_Points[0].position);
+                        Gizmos.color = Color.red;
+                        Gizmos.DrawWireSphere(m_Points[i].position, 0.25f);
+                    }
+                    else
+                    {
+                        Gizmos.color = Color.green;
+                        Gizmos.DrawLine(m_Points[i - 1].position, m_Points[i].position);
+                        Gizmos.color = Color.red;
+                        Gizmos.DrawWireSphere(m_Points[i].position, 0.25f);
+                    }
+
                 }
 
+                Gizmos.color = Color.green;
+                Gizmos.DrawLine(m_Points[i - 1].position, m_Points[i].position);
+                Gizmos.DrawWireSphere(m_Points[i - 1].position, 0.25f);
             }
-    
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(m_Points[i - 1].position, m_Points[i].position);
-            Gizmos.DrawWireSphere(m_Points[i - 1].position, 0.25f);
-        }       
+        }
+        else
+        {
+            for (int i = 1; i < m_Points.Count; i++)
+            {
+                if (i == m_Points.Count - 1)
+                {
+                    Gizmos.color = Color.red;
+                    Gizmos.DrawLine(m_Points[i - 1].position, m_Points[i].position);
+                    Gizmos.DrawWireSphere(m_Points[i].position, 0.25f);
+                }
+                Gizmos.color = Color.green;
+                Gizmos.DrawLine(m_Points[i - 1].position, m_Points[i].position);
+                Gizmos.DrawWireSphere(m_Points[i - 1].position, 0.25f);
+            }
+        }      
 
     }
 }
