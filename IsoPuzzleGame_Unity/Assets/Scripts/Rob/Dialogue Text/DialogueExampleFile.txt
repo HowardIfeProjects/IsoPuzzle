@@ -1,0 +1,24 @@
+EXAMPLE TEXT DO NOT USE! 
+
+This shows how to set up a line of dialogue 
+
+Name|Dialogue|Sprite Number (int)|Sprite to Change (PLRSPR)
+
+IMPORTANT - Name and dialogue can be swapped round however the sprite number must be in the third part of the line
+		  - You don't need to put a spirite number in for every line, only when you want to change the sprite
+		  - To change the player's sprite, type "PLRSPR" into the fourth part of the line. leaving this blank will change the NPC's sprite
+
+Button line 
+
+A whole lot more complicated so it will need to be simplified in the future!
+
+Example:
+Choice A|Choice B|Choice C|BTN|21|25|46|57|58|102
+
+Example Breakdown:
+Choice A Dialogue|Choice B Dialogue|Choice C Dialogue|Call Request (BTN)|Choice A Start Line (int)|Choice A End Line (int)|Choice B Start Line (int)|Choice B End Line (int)|Choice C Start Line (int)|Choice C End Line (int)
+
+IMPORTANT - Dialogue for choices A/B/C must be in component 1, 2, and 3
+		  - The call request must be in component 4 with the "BTN" typed inside
+		  - Currently all lines related to these choices must be in the same file however, this will be changed in the future (to a string array if you forget Rob!)
+		  - Currenty you can't call any sprites, this will be changed to do so in the future
