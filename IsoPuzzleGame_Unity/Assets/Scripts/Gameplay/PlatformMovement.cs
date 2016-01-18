@@ -43,6 +43,9 @@ public class PlatformMovement : MonoBehaviour {
 	// Update is called once per frame
 	private void Update () {
 
+        if (GameManager.isPaused)
+            return;
+
         Move();
 	
 	}

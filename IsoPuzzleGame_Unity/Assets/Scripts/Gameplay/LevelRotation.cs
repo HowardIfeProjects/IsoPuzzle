@@ -54,12 +54,18 @@ public class LevelRotation : MonoBehaviour {
 
     private void Update() {
 
+        if (GameManager.isPaused)
+            return;
+
         PlayerInput();
 
     }
 	
 	// Update is called once per frame
 	private void LateUpdate () {
+
+        if (GameManager.isPaused)
+            return;
 
         TrackPlayer();
 

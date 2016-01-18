@@ -144,7 +144,9 @@ namespace com.ootii.Actors
             if (!_IsEnabled) { return; }
             if (mActorController == null) { return; }
             if (IsTalking) return;
-           // if (mInputSource == null || !mInputSource.IsEnabled) { return; }
+            if (GameManager.isPaused) return;
+
+            // if (mInputSource == null || !mInputSource.IsEnabled) { return; }
 
             float lDeltaTime = TimeManager.SmoothedDeltaTime;
 

@@ -3,6 +3,9 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
+    //Game States
+    public static bool isPaused = false;
+
     //SAVE / LOAD Delegates
     public delegate void E_Save();
     public static event E_Save OnSave;
@@ -12,7 +15,14 @@ public class GameManager : MonoBehaviour {
 
 
     //UNITY LIFECYCLE===================================================
-	// Use this for initialization
+    // Use this for initialization
+
+    private void Awake() {
+
+        GameObject.DontDestroyOnLoad(gameObject);
+
+    }
+
 	void Start () {
 	
 	}

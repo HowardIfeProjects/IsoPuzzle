@@ -18,19 +18,25 @@ public class HUDScript : MonoBehaviour {
     private int _imageTwoID;
     private int _imageThreeID;
 
-    
+    public delegate void E_AddItemImage(Sprite spr, int i);
+    public static event E_AddItemImage OnAddItemImage;
 
     // Use this for initialization
     void Start () {
-	
+
+        HUDScript.OnAddItemImage += AddItemImage;
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
    
-
 	}
+
+    public static void Call_OnAddItemImage(Sprite spr, int i)
+    {
+        HUDScript.OnAddItemImage(spr, i);
+    }
 
     public void AddItemImage(Sprite spr, int i)// need to pass the sprite found in the inventory to the 
     {
@@ -53,7 +59,7 @@ public class HUDScript : MonoBehaviour {
 
     public static void Test()
     { 
-}
+    }
 
     public void RemoveItemImage(int i)
     {
