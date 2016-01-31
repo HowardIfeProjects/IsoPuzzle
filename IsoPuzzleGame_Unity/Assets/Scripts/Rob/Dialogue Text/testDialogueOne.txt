@@ -6,7 +6,7 @@ NPC|That's true Player, if we keep this up we will confuse ourselves!
 ???|I'm the Player... 
 Player|No wait the NPC?|1|PLRSPR
 ???|Gah! Sort this problem out soon Rob!|2|PLRSPR
-Choice A|Choice B|Choice C|BTN|21|25|0|8|21|25
+Choice A|Choice B|Choice C|BTN|21|25|0|8|21|25|0|1|2
 ???|By the way Rob, make sure either Howard see this line or tell him to add the few lines of code in to disable Player movement. 
 
 

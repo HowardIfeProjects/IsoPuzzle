@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using com.ootii.Actors;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -22,13 +23,21 @@ public class DialogueManager : MonoBehaviour
     public GameObject btn_buttonTwo;
     public GameObject btn_buttonThree;
 
+    private bool buttonFirstLoop = true;
+
     public Image thePlayerSprite;
+    public Image thePlayerSpriteTwo;
+    public Image thePlayerSpriteThree;
     private Color thePlayerColor;
     public Image theNPCSprite;
     private Color theNPCColor;
 
     public Sprite[] spr_playerSprites;
     public Sprite[] spr_npcSprites;
+
+    private int pose = 0;//set so it can convert the thrid part of the line into an in for the image to show 
+    private int poseTwo = 0;
+    private int poseThree = 0;
 
     private int a_StartLine;
     private int a_endLine;
@@ -107,7 +116,7 @@ public class DialogueManager : MonoBehaviour
 
         /*End of the sprite organisation*/
         // _theText.text = _textLines[_currentLine];
-            int pose = 0;//set so it can convert the thrid part of the line into an in for the image to show 
+
         string thisLine = _textLines[_currentLine];//prepares the line stored in the array to be split 
         string[] _splitCurrentLine = thisLine.Split('|');//for everytime the code finds a '|' in the line, it will create a new line in this array 
 
@@ -125,7 +134,7 @@ public class DialogueManager : MonoBehaviour
             _textName.text = "";
             _theText.text = "";
 
-            if(_splitCurrentLine.Length == 10)
+            if(_splitCurrentLine.Length == 13)
             {
                 a_StartLine = int.Parse(_splitCurrentLine[4]);
                 a_endLine = int.Parse(_splitCurrentLine[5]);
@@ -133,6 +142,12 @@ public class DialogueManager : MonoBehaviour
                 b_endLine = int.Parse(_splitCurrentLine[7]);
                 c_startLine = int.Parse(_splitCurrentLine[8]);
                 c_endLine = int.Parse(_splitCurrentLine[9]);
+                pose = int.Parse(_splitCurrentLine[10]);
+                thePlayerSprite.sprite = spr_playerSprites[pose];
+                poseTwo = int.Parse(_splitCurrentLine[11]);
+                thePlayerSpriteTwo.sprite = spr_playerSprites[poseTwo];
+                poseThree = int.Parse(_splitCurrentLine[12]);
+                thePlayerSpriteThree.sprite = spr_playerSprites[poseThree];
             }
 
             /*remove when needed, this need to be a btn click
@@ -199,16 +214,19 @@ public class DialogueManager : MonoBehaviour
                 SetNewEndLine(a_endLine);
                 //set the new start posistion for the dialogue 
                 //set the new end posistion for the dialogue, need to be vars that can be passed through along with the button choice 
+                thePlayerSprite.sprite = spr_playerSprites[pose];
                 break;
             case 2:
                 Debug.Log("You chose option B!");
                 SetNewStartLine(b_startLine);
                 SetNewEndLine(b_endLine);
+                thePlayerSprite.sprite = spr_playerSprites[poseTwo];
                 break;
             case 3:
                 Debug.Log("You chose option C!");
                 SetNewStartLine(c_startLine);
                 SetNewEndLine(c_endLine);
+                thePlayerSprite.sprite = spr_playerSprites[poseThree];
                 break;
         }
 
@@ -256,6 +274,8 @@ public class DialogueManager : MonoBehaviour
         _textBox.SetActive(true);
         if(_stopPlayerMovement)
         {
+
+            ActorDriver.IsTalking = true;
             //fix tomorrow
          //   _player._playerCanMove = false;
         }
@@ -265,14 +285,35 @@ public class DialogueManager : MonoBehaviour
     void DisableTextBox()
     {
         _textBox.SetActive(false);
-       // _player._playerCanMove = true;
+        // _player._playerCanMove = true;
+
+        ActorDriver.IsTalking = false;
     }
 
     void EnableButtons()
     {
+       
+
         btn_buttonOne.SetActive(true);
         btn_buttonTwo.SetActive(true);
         btn_buttonThree.SetActive(true);
+
+      
+
+        if(buttonFirstLoop)
+        {
+            thePlayerColor.a = 0.1f;
+           /* thePlayerColor.r = 0.3f;
+            thePlayerColor.g = 0.4f;
+            thePlayerColor.b = 0.6f;*/
+            thePlayerSprite.color = thePlayerColor;
+            thePlayerSpriteTwo.color = thePlayerColor;
+            thePlayerSpriteThree.color = thePlayerColor;
+            Debug.Log("This is looping");
+            buttonFirstLoop = false;
+        }
+
+
     }
 
     void DisableButtons()
@@ -280,6 +321,12 @@ public class DialogueManager : MonoBehaviour
         btn_buttonOne.SetActive(false);
         btn_buttonTwo.SetActive(false);
         btn_buttonThree.SetActive(false);
+
+        Color disableSpirtes = thePlayerSprite.color;
+        disableSpirtes.a = 0;
+        thePlayerSpriteTwo.color = disableSpirtes;
+        thePlayerSpriteThree.color = disableSpirtes;
+        buttonFirstLoop = true;
     }
 
     void EnableSprites()
@@ -291,6 +338,7 @@ public class DialogueManager : MonoBehaviour
         theNPCColor = theNPCSprite.color;
         theNPCColor.a = 1;
         theNPCSprite.color = theNPCColor;
+
     }
 
     void DisableSprites()
@@ -302,6 +350,9 @@ public class DialogueManager : MonoBehaviour
         theNPCColor = theNPCSprite.color;
         theNPCColor.a = 0;
         theNPCSprite.color = theNPCColor;
+
+        thePlayerSpriteTwo.color = thePlayerColor;
+        thePlayerSpriteThree.color = thePlayerColor;
     }
 
     public void ReloadScript(TextAsset theText)
@@ -312,5 +363,24 @@ public class DialogueManager : MonoBehaviour
             _textLines = new string[1];
             _textLines = (theText.text.Split('\n'));
         }
+    }
+
+    public void TestOver(string text)
+    {
+        Debug.Log(text);
+    }
+
+    public  void OverButton(Image img)
+    {
+        Color spriteAlpha = img.color;
+        spriteAlpha.a = 1;
+        img.color = spriteAlpha;
+    }
+
+    public void ExitButton(Image img)
+    {
+        Color spriteAlpha = img.color;
+        spriteAlpha.a = 0.1f;
+        img.color = spriteAlpha;
     }
 }

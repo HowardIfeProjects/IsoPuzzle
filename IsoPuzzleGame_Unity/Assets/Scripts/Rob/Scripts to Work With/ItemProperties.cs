@@ -59,7 +59,10 @@ public class ItemProperties : MonoBehaviour {
 
     public void PickUpItem()
     {
+        //change to a delegent 
+        //ManagerSystem.callDelegent
         hudScript.AddItemImage(m_itemImage, m_itemID);
+        //
         InventorySystemManager.CallAddItem(m_itemID, m_itemDescription, m_itemImage);
         Destroy(gameObject);
     }
