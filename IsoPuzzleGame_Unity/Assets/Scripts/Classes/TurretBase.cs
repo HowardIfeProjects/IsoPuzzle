@@ -10,6 +10,8 @@ public class TurretBase : MonoBehaviour {
     public float m_SightRange;
     protected bool CanFire = true;
 
+    public float m_FieldOfView;
+
     public virtual void Target()
     {
         //set target pos
