@@ -12,6 +12,7 @@ public class Rotate : MonoBehaviour {
 	void Update () {
 
         transform.Rotate(xSpeed * Time.deltaTime, ySpeed * Time.deltaTime, zSpeed * Time.deltaTime);
+      
 
 	}
 }
