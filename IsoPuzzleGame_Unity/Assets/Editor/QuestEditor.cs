@@ -7,15 +7,9 @@ using System.Collections.Generic;
 public class QuestEditor : EditorWindow
 {
 
-    enum displayFieldType { DisplayAsAutomaticFields, DisplayAsCustomizableGUIFields }
-    displayFieldType DisplayFieldType;
-
-    LevelManager t;
-    SerializedObject GetTarget;
-    SerializedProperty ThisList;
-    int ListSize;
-
-
+    private int _levelIndex = 0;
+    private int _MissionNumber = 0;
+  
     [MenuItem("Custom Tools/Mission Tools/ Show Editor")]
     private static void showEditor()
     {
@@ -38,5 +32,29 @@ public class QuestEditor : EditorWindow
 
     void OnGUI()
     {
+        EditorGUILayout.Space();
+        GUILayout.Label("Level Number: " + _levelIndex);
+        GUILayout.Label("Mission Number: " + _MissionNumber);
+        EditorGUILayout.Space();
+
+        //list stuff
+        
+        int ListSize = Selection.activeGameObject.GetComponent<LevelManager>().li_LevelData[_levelIndex]._Objectives.Length;
+        ListSize = EditorGUILayout.IntField("Objectives Count: ", ListSize);
+
+        //end
+
+        EditorGUILayout.BeginHorizontal();
+        {
+            GUILayout.Button("Previous Level");
+            GUILayout.Button("Next Level");
+        }
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        {
+            GUILayout.Button("Previous Mission");
+            GUILayout.Button("Next Mission");
+        }
     }
 }
