@@ -10,7 +10,9 @@ public class DialogueManager : MonoBehaviour
     public Text _textName;
     public Text _theText;
 
-    public TextAsset _textFile;
+    public TextAsset _textFile; //this one works
+    //public string _textFile;//need to find a way to break it up 
+
     public string[] _textLines;//FIX ERROR: Error occurs when the _currentLines value excees the length in this array. This prevents the box from closing on a button required line 
 
     public int _currentLine;
@@ -68,6 +70,7 @@ public class DialogueManager : MonoBehaviour
             /*will split the lines everytime the text file has a break 
             therefor creating a value in the array*/
             _textLines = (_textFile.text.Split('\n'));
+           // _textLines = (_textFile.Split('\n'));//string version 
         }
 
         if(_endAtLine == 0)
@@ -120,8 +123,7 @@ public class DialogueManager : MonoBehaviour
         string thisLine = _textLines[_currentLine];//prepares the line stored in the array to be split 
         string[] _splitCurrentLine = thisLine.Split('|');//for everytime the code finds a '|' in the line, it will create a new line in this array 
 
-
-        if(_textLines[_currentLine].Contains("BTN"))
+        if (_textLines[_currentLine].Contains("BTN"))
         {
             Debug.Log("This works! You should focus on buttons!");
 
