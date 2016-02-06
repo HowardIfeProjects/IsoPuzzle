@@ -38,7 +38,10 @@ public class QuestEditor : EditorWindow
         EditorGUILayout.Space();
 
         //list stuff
-        
+
+        if (!Selection.activeGameObject.GetComponent<LevelManager>())
+            return;
+
         int ListSize = Selection.activeGameObject.GetComponent<LevelManager>().li_LevelData[_levelIndex]._Objectives.Length;
         ListSize = EditorGUILayout.IntField("Objectives Count: ", ListSize);
 

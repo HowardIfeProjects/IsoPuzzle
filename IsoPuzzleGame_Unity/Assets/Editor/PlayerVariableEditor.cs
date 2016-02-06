@@ -44,6 +44,7 @@ public class PlayerVariableEditor : EditorWindow {
         _gravity = EditorGUILayout.FloatField("Gravity: ", _gravity);
         EditorGUILayout.Space();
 
+        GUI.color = Color.green;
         if(GUILayout.Button("SET"))
         {
             com.ootii.Actors.ActorDriver _driver = Selection.activeGameObject.GetComponent<com.ootii.Actors.ActorDriver>();

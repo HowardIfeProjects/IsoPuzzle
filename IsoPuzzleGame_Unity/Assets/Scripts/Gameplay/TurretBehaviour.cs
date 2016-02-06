@@ -34,6 +34,8 @@ public class TurretBehaviour : TurretBase {
         else if (m_TypeOfTurret == TypeOfTurret.Scanning)
         {
             Target();
+
+            base.Target();
         }
 	}
 
@@ -94,7 +96,6 @@ public class TurretBehaviour : TurretBase {
         {
             d += transform.eulerAngles.y;
         }
-
         return new Vector3(Mathf.Sin(d * Mathf.Deg2Rad), 0, Mathf.Cos(d * Mathf.Deg2Rad));
     }
 }
