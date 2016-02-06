@@ -33,9 +33,11 @@ public class TurretBehaviour : TurretBase {
         }
         else if (m_TypeOfTurret == TypeOfTurret.Scanning)
         {
-            Target();
+            if(!base.CanSeeTarget())
+                Target();
 
-            base.Target();
+            if (CanFire)
+                base.Fire();
         }
 	}
 
