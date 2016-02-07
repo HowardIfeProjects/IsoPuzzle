@@ -29,26 +29,31 @@ public class PlatformMovement : MonoBehaviour {
     private bool m_IncreaseIndex = true;
 
 
+    private LineRenderer m_LineRenderer;
+
     //UNITY LIFECYCLE=======================================================
     //======================================================================
 
-	// Use this for initialization
-	private void Start () {
+    // Use this for initialization
+    private void Start() {
 
-        for(int i = 0; i < m_Points.Count; i++) {
+        for (int i = 0; i < m_Points.Count; i++) {
             m_Points[i].parent = null;
         }
-	}
-	
-	// Update is called once per frame
-	private void Update () {
+
+        m_LineRenderer = GetComponent<LineRenderer>();
+    }
+
+    // Update is called once per frame
+    private void Update() {
 
         if (GameManager.isPaused)
             return;
 
         Move();
-	
-	}
+        DrawPath();
+
+    }
     //======================================================================
 
     //TODO: Tidy up the m_current waypoint stuff into getter and setter
@@ -143,6 +148,27 @@ public class PlatformMovement : MonoBehaviour {
         yield return new WaitForSeconds(_time);
         m_currentIndex++;
         m_CounterStarted = false;
+    }
+
+    private void DrawPath()
+    {
+        if (m_LineRenderer == null)
+            return;
+
+        if (m_FollowPathBackwards)
+            m_LineRenderer.SetVertexCount(m_Points.Count);
+        else
+            m_LineRenderer.SetVertexCount(m_Points.Count + 1);
+
+        for (int i = 0; i < m_Points.Count; i++)
+        {
+            m_LineRenderer.SetPosition(i, m_Points[i].transform.position);
+
+            if (!m_FollowPathBackwards && i == (m_Points.Count - 1))
+                m_LineRenderer.SetPosition(i + 1, m_Points[0].transform.position);
+      
+        }
+
     }
 
     //Send Message Methods

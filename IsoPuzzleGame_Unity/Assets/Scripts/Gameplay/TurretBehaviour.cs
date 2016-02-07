@@ -35,9 +35,9 @@ public class TurretBehaviour : TurretBase {
         {
             if(!base.CanSeeTarget())
                 Target();
-
-            if (CanFire)
-                base.Fire();
+            else
+                if (CanFire)
+                    base.Fire();
         }
 	}
 
