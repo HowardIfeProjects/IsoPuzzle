@@ -10,6 +10,7 @@ public class PlatformMovement : MonoBehaviour {
     public enum PlatformType { ConstantMovement, IncrementMovement, DelayedMovement }
     [Header("Variables")]
     public PlatformType m_PlatformType = new PlatformType();
+    public bool m_TriggerOnPlayerCollision;
     public float m_Speed;
     public bool m_Loop;
     public bool m_FollowPathBackwards;
@@ -42,6 +43,9 @@ public class PlatformMovement : MonoBehaviour {
         }
 
         m_LineRenderer = GetComponent<LineRenderer>();
+
+        if (m_TriggerOnPlayerCollision)
+            m_Move = false;
     }
 
     // Update is called once per frame
@@ -234,5 +238,15 @@ public class PlatformMovement : MonoBehaviour {
             }
         }      
 
+    }
+
+    public void OnCollisionEnter(Collision other)
+    {
+        Debug.Log(other.collider.tag);
+        if (other.collider.tag == "Player" && m_TriggerOnPlayerCollision)
+        {
+            m_TriggerOnPlayerCollision = false;
+            m_Move = true;
+        }
     }
 }
